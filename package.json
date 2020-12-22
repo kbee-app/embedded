@@ -1,0 +1,40 @@
+{
+  "name": "@kbee-app/embedded",
+  "version": "0.0.1",
+  "description": "Embed a Kbee knowledge base into your website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify ./src/kbee-embedded.js -p tinyify -t [ babelify --presets [ @babel/env ] ] --debug | exorcist ./dist/kbee-embedded.js.map > ./dist/kbee-embedded.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kbee-app/embedded.git"
+  },
+  "keywords": [
+    "Kbee",
+    "Knowledge",
+    "Base",
+    "Help",
+    "Center",
+    "Google",
+    "Docs"
+  ],
+  "author": "Sandeep Dinesh",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/kbee-app/embedded/issues"
+  },
+  "homepage": "https://github.com/kbee-app/embedded#readme",
+  "dependencies": {
+    "@ungap/url-search-params": "^0.2.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "babelify": "^10.0.0",
+    "browserify": "^17.0.0",
+    "exorcist": "^1.0.1",
+    "tinyify": "^3.0.0"
+  }
+}
