@@ -5,7 +5,7 @@ window.Kbee = {
     document.addEventListener("DOMContentLoaded", () => {
       const originalPath = window.location.pathname
       const urlParams = new URLSearchParams(window.location.search)
-      const kbeePath = decodeURI(urlParams.get('kbee'))
+      const kbeePath = urlParams.get('kbee') ? decodeURI(urlParams.get('kbee')) : null
       const targetElement = typeof target === "string" ? document.querySelector(target) : target
       if (typeof target === "string" && !targetElement) throw new Error(`Target element with selector "${target}" does not exist`)
       if (!(targetElement instanceof Element || targetElement instanceof HTMLDocument)) throw new Error(`Target element is not a valid DOM element`)
@@ -35,7 +35,7 @@ window.Kbee = {
 
         window.addEventListener('popstate', () => {
           const urlParams = new URLSearchParams(window.location.search)
-          const kbeePath = decodeURI(urlParams.get('kbee'))
+          const kbeePath = urlParams.get('kbee') ? decodeURI(urlParams.get('kbee')) : null
           targetElement.querySelector('iframe').src = `${spaceUrl}${kbeePath ? kbeePath : ''}?jwt=${token}`
         })
 
