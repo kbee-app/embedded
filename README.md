@@ -6,7 +6,7 @@ Embed a Kbee knowledge base into your website
 First, include the Kbee script tag in your page's `<head>`:
 
 ```
-<script src="https://cdn.jsdelivr.net/gh/kbee-app/embedded/dist/kbee-embedded.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/kbee-app/embedded@latest/dist/kbee-embedded.js"></script>
 ```
 
 Then, call the Kbee function to render the help center into the target of your choosing:
