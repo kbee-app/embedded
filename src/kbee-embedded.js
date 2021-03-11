@@ -5,7 +5,8 @@ window.Kbee = {
     document.addEventListener("DOMContentLoaded", () => {
       const originalPath = window.location.pathname
       const urlParams = new URLSearchParams(window.location.search)
-      const kbeePath = urlParams.get('kbee') ? decodeURI(urlParams.get('kbee')) : null
+      const kbeeFullPath = urlParams.get('kbee') ? decodeURI(urlParams.get('kbee')) : ''
+      const [kbeePath, kbeeAchor] = kbeeFullPath.split('#')
       const targetElement = typeof target === "string" ? document.querySelector(target) : target
       if (typeof target === "string" && !targetElement) throw new Error(`Target element with selector "${target}" does not exist`)
       if (!(targetElement instanceof Element || targetElement instanceof HTMLDocument)) throw new Error(`Target element is not a valid DOM element`)
@@ -19,8 +20,12 @@ window.Kbee = {
         const xhr = new XMLHttpRequest()
         xhr.addEventListener("readystatechange", function () {
           if (this.readyState === 4) {
-            const { jwt } = JSON.parse(this.responseText)
-            renderWithToken(jwt)
+            try {
+              const { jwt } = JSON.parse(this.responseText)
+              renderWithToken(jwt)
+            } catch (e) {
+              targetElement.innerHTML = 'Could not authenticate. Please make sure you <a href="https://help.kbee.app/page/1yogD_TtpKLjdmVhFGxJyIaRZPuyPcbwtTH1rHsZhcUQ/Embed_Kbee_on_your_page#h.a4zbywr9omu7">whitelist your domain</a>.'
+            }
           }
         })
         xhr.open("POST", `${spaceUrl}/api/generateJWT`)
@@ -30,13 +35,14 @@ window.Kbee = {
       }
 
       function renderWithToken(token) {
-        targetElement.innerHTML = `<iframe src="${spaceUrl}${kbeePath ? kbeePath : ''}?jwt=${token}" style="width:100%;height:100%;border:none"/>`
+        targetElement.innerHTML = `<iframe src="${spaceUrl}${kbeePath}?jwt=${token}#${kbeeAchor ?? ''}" style="width:100%;height:100%;border:none"/>`
         const iframeWindow = targetElement.querySelector('iframe').contentWindow
 
         window.addEventListener('popstate', () => {
           const urlParams = new URLSearchParams(window.location.search)
-          const kbeePath = urlParams.get('kbee') ? decodeURI(urlParams.get('kbee')) : null
-          targetElement.querySelector('iframe').src = `${spaceUrl}${kbeePath ? kbeePath : ''}?jwt=${token}`
+          const kbeeFullPath = urlParams.get('kbee') ? decodeURI(urlParams.get('kbee')) : ''
+          const [kbeePath, kbeeAchor] = kbeeFullPath.split('#')
+          targetElement.querySelector('iframe').src = `${spaceUrl}${kbeePath}?jwt=${token}#${kbeeAchor ?? ''}`
         })
 
         window.addEventListener('message', message => {
