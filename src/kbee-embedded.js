@@ -14,6 +14,8 @@ window.Kbee = {
       if (!spaceUrl) throw new Error(`"spaceUrl" is required`)
       if (!token && !apiKey) throw new Error(`One of "token" or "apiKey" is required`)
 
+      spaceUrl = spaceUrl.replace(/\/$/, "")
+
       // JWT token is not passed, generate one on the client side
       if (!token) {
         const data = `{"url": "${spaceUrl.split('://')[1]}","key":"${apiKey}"}`
@@ -49,7 +51,13 @@ window.Kbee = {
           if (message.source !== iframeWindow) return
           if (message.data.indexOf('jwt=') > -1) return
           const urlParams = new URLSearchParams(window.location.search)
-          urlParams.set('kbee', message.data)
+          let msg = message.data
+          if (message.data.startsWith('__initial__')) {
+            [, msg] = message.data.split('__initial__')
+            const [kbeePath, kbeeAchor] = msg.split('#')
+            targetElement.querySelector('iframe').src = `${spaceUrl}${kbeePath}?jwt=${token}#${kbeeAchor ?? ''}`
+          }
+          urlParams.set('kbee', msg)
           const newPath = `${originalPath}?${urlParams.toString()}`
           window.history.pushState({}, '', newPath)
         })
