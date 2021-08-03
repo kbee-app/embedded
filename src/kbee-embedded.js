@@ -1,8 +1,9 @@
 import URLSearchParams from '@ungap/url-search-params'
 
 window.Kbee = {
-  render: ({ target, token, apiKey, spaceUrl, }) => {
-    document.addEventListener("DOMContentLoaded", () => {
+  render: ({ target, token, apiKey, spaceUrl, bypassDocumentLoadEvent }) => {
+
+    function start() {
       const originalPath = window.location.pathname
       const urlParams = new URLSearchParams(window.location.search)
       const kbeeFullPath = urlParams.get('kbee') ? decodeURI(urlParams.get('kbee')) : ''
@@ -63,7 +64,13 @@ window.Kbee = {
         })
 
       }
+    }
 
-    })
+    // For React and other view libraries, the DOMContentLoaded event fires too early to be used, so it should be bypassed
+    if (bypassDocumentLoadEvent) {
+      start()
+    } else {
+      document.addEventListener("DOMContentLoaded", start)
+    }
   }
 }

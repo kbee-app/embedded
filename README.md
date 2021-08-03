@@ -34,6 +34,8 @@ Kbee.render({
   token: '<JWT-TOKEN>',
   // If you do not want to or cannot generate a JWT token, you can whitelist your domain and use the API key to generate a JWT from the Kbee servers
   // This method is much simpler and does not require you to run any server code, but a dedicated attacker can steal your API key and manually spoof requests to generate a JWT.
-  apiKey: '<YOUR-API-KEY>'
+  apiKey: '<YOUR-API-KEY>',
+  // For React and other view libraries, the DOMContentLoaded event fires too early to be used, so it should be bypassed
+  bypassDocumentLoadEvent: true
 })
 ```
