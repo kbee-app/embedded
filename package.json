@@ -1,6 +1,6 @@
 {
   "name": "@kbee-app/embedded",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Embed a Kbee knowledge base into your website",
   "main": "src/index.js",
   "scripts": {

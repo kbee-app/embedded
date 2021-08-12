@@ -3,6 +3,29 @@ Embed a Kbee knowledge base into your website
 
 ## Usage
 
+### Via NPM
+
+Install the package
+
+```
+npm i @kbee-app/embedded --save
+```
+
+Then use the package
+
+```javascript
+const renderKbee = require('@kbee-app/embedded')
+renderKbee({
+  target: '#kbee-content',
+  spaceUrl: 'http://yourspace.kbee.app',
+  apiKey: '<YOUR-API-KEY>'
+})
+```
+
+### Via JSDeliver
+
+If you can't use npm, you can use a pre-built bundle from JSDeliver
+
 First, include the Kbee script tag in your page's `<head>`:
 
 ```
@@ -38,4 +61,24 @@ Kbee.render({
   // For React and other view libraries, the DOMContentLoaded event fires too early to be used, so it should be bypassed
   bypassDocumentLoadEvent: true
 })
+```
+
+## React Example
+
+```javascript
+import { useEffect } from 'react'
+
+const renderKbee = require('@kbee-app/embedded')
+
+export default function Test() {
+  useEffect(() => {
+    renderKbee({
+      target: '#kbee-content',
+      spaceUrl: 'http://yourspace.kbee.app',
+      apiKey: '<YOUR-API-KEY>'
+      bypassDocumentLoadEvent: true
+    })
+  }, [])
+  return <div id='kbee-content' style={{ width: '100vw', height: '100vh' }} />
+}
 ```
