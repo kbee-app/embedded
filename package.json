@@ -1,11 +1,11 @@
 {
   "name": "@kbee-app/embedded",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Embed a Kbee knowledge base into your website",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "npx http-server",
-    "build": "browserify ./src/kbee-embedded.js -p tinyify -t [ babelify --presets [ @babel/env ] ] --debug | exorcist ./dist/kbee-embedded.js.map > ./dist/kbee-embedded.js"
+    "build": "browserify ./src/browser.js -p tinyify -t [ babelify --presets [ @babel/env ] ] --debug | exorcist ./dist/kbee-embedded.js.map > ./dist/kbee-embedded.js"
   },
   "repository": {
     "type": "git",
