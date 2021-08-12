@@ -75,7 +75,7 @@ export default function Test() {
     renderKbee({
       target: '#kbee-content',
       spaceUrl: 'http://yourspace.kbee.app',
-      apiKey: '<YOUR-API-KEY>'
+      apiKey: '<YOUR-API-KEY>',
       bypassDocumentLoadEvent: true
     })
   }, [])
