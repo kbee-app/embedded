@@ -1,4 +1,4 @@
-const URLSearchParams = require('@ungap/url-search-params')
+const URLSearchParams = require('@ungap/url-search-params/cjs')
 
 function render({ target, token, apiKey, spaceUrl, bypassDocumentLoadEvent }) {
 
@@ -37,14 +37,14 @@ function render({ target, token, apiKey, spaceUrl, bypassDocumentLoadEvent }) {
     }
 
     function renderWithToken(token) {
-      targetElement.innerHTML = `<iframe src="${spaceUrl}${kbeePath}?jwt=${token}#${kbeeAchor ?? ''}" style="width:100%;height:100%;border:none"/>`
+      targetElement.innerHTML = `<iframe src="${spaceUrl}${kbeePath}?jwt=${token}#${kbeeAchor}" style="width:100%;height:100%;border:none"/>`
       const iframeWindow = targetElement.querySelector('iframe').contentWindow
 
       window.addEventListener('popstate', () => {
         const urlParams = new URLSearchParams(window.location.search)
         const kbeeFullPath = urlParams.get('kbee') ? decodeURI(urlParams.get('kbee')) : ''
         const [kbeePath, kbeeAchor] = kbeeFullPath.split('#')
-        targetElement.querySelector('iframe').src = `${spaceUrl}${kbeePath}?jwt=${token}#${kbeeAchor ?? ''}`
+        targetElement.querySelector('iframe').src = `${spaceUrl}${kbeePath}?jwt=${token}#${kbeeAchor}`
       })
 
       window.addEventListener('message', message => {
@@ -55,7 +55,7 @@ function render({ target, token, apiKey, spaceUrl, bypassDocumentLoadEvent }) {
         if (message.data.startsWith('__initial__')) {
           [, msg] = message.data.split('__initial__')
           const [kbeePath, kbeeAchor] = msg.split('#')
-          targetElement.querySelector('iframe').src = `${spaceUrl}${kbeePath}?jwt=${token}#${kbeeAchor ?? ''}`
+          targetElement.querySelector('iframe').src = `${spaceUrl}${kbeePath}?jwt=${token}#${kbeeAchor}`
         }
         urlParams.set('kbee', msg)
         const newPath = `${originalPath}?${urlParams.toString()}`
